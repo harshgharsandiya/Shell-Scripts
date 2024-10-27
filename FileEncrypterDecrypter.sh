@@ -1,22 +1,26 @@
 #!/bin/bash
 
-echo "This is a simple file encrypter/decrypter"
-echo "Please choose what you want to do"
+echo "This is a Simple File Encrypter/Decrypter"
+echo "Please Choose What you want to do"
 
-choice="Encrypt Decrypt"
+choices=("Encrypt" "Decrypt")
 
-select option in $choice; do
-        if [ $REPLY = 1 ];
-then
-        echo "Please enter the filename you want to encrypt"
-        read file;
-        gpg -c $file
+select option in "${choices[@]}"; do
+    if [[ $option == "Encrypt" ]]; then
+        echo "You have selected Encryption"
+        echo "Please Enter file name (with full path): "
+        read file1
+        gpg -c "$file1"
         echo "The file has been encrypted"
-else
-        echo  "Please enter the filename you want to decrypt"
-        read file2;
-        gpg -d $file2
+        break
+    elif [[ $option == "Decrypt" ]]; then
+        echo "You have selected Decryption"
+        echo "Please Enter file name (with full path): "
+        read file2
+        gpg -d "$file2"
         echo "The file has been decrypted"
-fi
-
+        break
+    else
+        echo "Invalid option, please try again."
+    fi
 done
